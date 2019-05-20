@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="lockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DomainUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="NoKey" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LockConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Licence" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ukey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CN" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_key">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="KeyID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DomainUser_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DomainUser" Type="Self.DomainUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DomainUser">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_key_DomainUser">
+          <End Role="DomainUser" Type="Self.DomainUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_key" Type="Self.User_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DomainUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User_key">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_key_Ukey">
+          <End Role="Ukey" Type="Self.Ukey" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_key" Type="Self.User_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ukey">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User_key">
+              <PropertyRef Name="KeyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lockModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DomainUser" EntityType="Self.DomainUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LockConfig" EntityType="Self.LockConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ukey" EntityType="Self.Ukey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_key" EntityType="Self.User_key" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DomainUser_Department" Association="Self.FK_DomainUser_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DomainUser" EntitySet="DomainUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_key_DomainUser" Association="Self.FK_User_key_DomainUser">
+            <End Role="DomainUser" EntitySet="DomainUser" />
+            <End Role="User_key" EntitySet="User_key" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_key_Ukey" Association="Self.FK_User_key_Ukey">
+            <End Role="Ukey" EntitySet="Ukey" />
+            <End Role="User_key" EntitySet="User_key" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="lockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DomainUsers" Relationship="Self.FK_DomainUser_Department" FromRole="Department" ToRole="DomainUser" />
+        </EntityType>
+        <EntityType Name="DomainUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="NoKey" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DomainUser_Department" FromRole="DomainUser" ToRole="Department" />
+          <NavigationProperty Name="User_key" Relationship="Self.FK_User_key_DomainUser" FromRole="DomainUser" ToRole="User_key" />
+        </EntityType>
+        <EntityType Name="LockConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Licence" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ukey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CN" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_key" Relationship="Self.FK_User_key_Ukey" FromRole="Ukey" ToRole="User_key" />
+        </EntityType>
+        <EntityType Name="User_key">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="KeyID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DomainUser" Relationship="Self.FK_User_key_DomainUser" FromRole="User_key" ToRole="DomainUser" />
+          <NavigationProperty Name="Ukey" Relationship="Self.FK_User_key_Ukey" FromRole="User_key" ToRole="Ukey" />
+        </EntityType>
+        <Association Name="FK_DomainUser_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DomainUser" Type="Self.DomainUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DomainUser">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_key_DomainUser">
+          <End Role="DomainUser" Type="Self.DomainUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_key" Type="Self.User_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DomainUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User_key">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_key_Ukey">
+          <End Role="Ukey" Type="Self.Ukey" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_key" Type="Self.User_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ukey">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User_key">
+              <PropertyRef Name="KeyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DomainUsers" EntityType="Self.DomainUser" />
+          <EntitySet Name="LockConfigs" EntityType="Self.LockConfig" />
+          <EntitySet Name="Ukeys" EntityType="Self.Ukey" />
+          <EntitySet Name="User_key" EntityType="Self.User_key" />
+          <AssociationSet Name="FK_DomainUser_Department" Association="Self.FK_DomainUser_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="DomainUser" EntitySet="DomainUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_key_DomainUser" Association="Self.FK_User_key_DomainUser">
+            <End Role="DomainUser" EntitySet="DomainUsers" />
+            <End Role="User_key" EntitySet="User_key" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_key_Ukey" Association="Self.FK_User_key_Ukey">
+            <End Role="Ukey" EntitySet="Ukeys" />
+            <End Role="User_key" EntitySet="User_key" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="lockModelStoreContainer" CdmEntityContainer="lockEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="lockModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Department1" ColumnName="Department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DomainUsers">
+            <EntityTypeMapping TypeName="lockModel.DomainUser">
+              <MappingFragment StoreEntitySet="DomainUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="NoKey" ColumnName="NoKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LockConfigs">
+            <EntityTypeMapping TypeName="lockModel.LockConfig">
+              <MappingFragment StoreEntitySet="LockConfig">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Licence" ColumnName="Licence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ukeys">
+            <EntityTypeMapping TypeName="lockModel.Ukey">
+              <MappingFragment StoreEntitySet="Ukey">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CN" ColumnName="CN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_key">
+            <EntityTypeMapping TypeName="lockModel.User_key">
+              <MappingFragment StoreEntitySet="User_key">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="KeyID" ColumnName="KeyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
