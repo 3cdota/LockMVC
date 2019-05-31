@@ -219,6 +219,7 @@
     <Content Include="Lock.edmx.diagram">
       <DependentUpon>Lock.edmx</DependentUpon>
     </Content>
+    <Content Include="lock.bak" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
