@@ -183,6 +183,8 @@
     <Compile Include="LockConfig.cs">
       <DependentUpon>Lock.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DomainUserMetadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ukey.cs">
       <DependentUpon>Lock.tt</DependentUpon>
@@ -251,11 +253,6 @@
     <Content Include="Views\Departments\Details.cshtml" />
     <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
-    <Content Include="Views\DomainUsers\Create.cshtml" />
-    <Content Include="Views\DomainUsers\Delete.cshtml" />
-    <Content Include="Views\DomainUsers\Details.cshtml" />
-    <Content Include="Views\DomainUsers\Edit.cshtml" />
-    <Content Include="Views\DomainUsers\Index.cshtml" />
     <Content Include="Views\Ukeys\Create.cshtml" />
     <Content Include="Views\Ukeys\Delete.cshtml" />
     <Content Include="Views\Ukeys\Details.cshtml" />
@@ -266,10 +263,14 @@
     <Content Include="Views\User_key\Details.cshtml" />
     <Content Include="Views\User_key\Edit.cshtml" />
     <Content Include="Views\User_key\Index.cshtml" />
+    <Content Include="Views\DomainUsers\Create.cshtml" />
+    <Content Include="Views\DomainUsers\Delete.cshtml" />
+    <Content Include="Views\DomainUsers\Details.cshtml" />
+    <Content Include="Views\DomainUsers\Edit.cshtml" />
+    <Content Include="Views\DomainUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

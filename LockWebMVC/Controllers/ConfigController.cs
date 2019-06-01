@@ -9,7 +9,7 @@ namespace LockWebMVC.Controllers
 {
     public class ConfigController : ApiController
     {
-        private LockEntities db = new LockEntities();
+        private lockEntities db = new lockEntities();
         private  const string KEY= "3bzgyxzm";
         // GET api/<controller>
         public IEnumerable<string> Get()

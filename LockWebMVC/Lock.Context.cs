@@ -13,10 +13,10 @@ namespace LockWebMVC
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LockEntities : DbContext
+    public partial class lockEntities : DbContext
     {
-        public LockEntities()
-            : base("name=LockEntities")
+        public lockEntities()
+            : base("name=lockEntities")
         {
         }
     

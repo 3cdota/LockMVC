@@ -13,7 +13,7 @@ namespace LockWebMVC.Controllers
     public class DepartmentsController : Controller
     {
        
-        private LockEntities db = new LockEntities();
+        private lockEntities db = new lockEntities();
 
         // GET: Departments
         public ActionResult Index()

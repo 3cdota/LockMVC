@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="lockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="lockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
@@ -20,6 +20,8 @@
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
           <Property Name="NoKey" Type="bit" Nullable="false" />
+          <Property Name="ShowC" Type="bit" Nullable="false" />
+          <Property Name="CanShare" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LockConfig">
           <Key>
@@ -104,8 +106,7 @@
             <End Role="User_key" EntitySet="User_key" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="lockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -127,6 +128,8 @@
           <Property Name="NoKey" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Department" Relationship="Self.FK_DomainUser_Department" FromRole="DomainUser" ToRole="Department" />
           <NavigationProperty Name="User_key" Relationship="Self.FK_User_key_DomainUser" FromRole="DomainUser" ToRole="User_key" />
+          <Property Name="ShowC" Type="Boolean" Nullable="false" />
+          <Property Name="CanShare" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="LockConfig">
           <Key>
@@ -231,6 +234,8 @@
           <EntitySetMapping Name="DomainUsers">
             <EntityTypeMapping TypeName="lockModel.DomainUser">
               <MappingFragment StoreEntitySet="DomainUser">
+                <ScalarProperty Name="CanShare" ColumnName="CanShare" />
+                <ScalarProperty Name="ShowC" ColumnName="ShowC" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />

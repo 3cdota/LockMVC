@@ -9,7 +9,7 @@ namespace LockWebMVC.Controllers
 {
     public class AuthenController : ApiController
     {
-        private LockEntities db = new LockEntities();
+        private lockEntities db = new lockEntities();
         // GET api/<controller>
         //public IEnumerable<string> Get()
         //{
@@ -57,6 +57,24 @@ namespace LockWebMVC.Controllers
                 return true;
             }
             
+
+        }
+
+        [HttpGet]
+        [Route("api/authen/userInfo")]
+        public DomainUser UserInof (string userName)
+        {
+            var userList = db.DomainUsers.Where(x => x.UserName == userName).ToList();
+            if (userList.Count > 0)
+            {
+                return userList[0];
+
+            }
+            else
+            {
+                return null;
+            }
+
 
         }
 

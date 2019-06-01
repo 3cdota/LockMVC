@@ -24,6 +24,8 @@ namespace LockWebMVC
         public string UserName { get; set; }
         public int DepartmentID { get; set; }
         public bool NoKey { get; set; }
+        public bool ShowC { get; set; }
+        public bool CanShare { get; set; }
     
         public virtual Department Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

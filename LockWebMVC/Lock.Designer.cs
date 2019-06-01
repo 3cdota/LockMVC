@@ -1,4 +1,4 @@
-﻿// 为模型“C:\Users\ASUS\source\repos\LockWebMVC - 副本\LockWebMVC\Lock.edmx”启用了 T4 代码生成。
+﻿// 为模型“D:\jyz\LockWebMVC\LockWebMVC\LockWebMVC\Lock.edmx”启用了 T4 代码生成。
 // 要启用旧代码生成功能，请将“代码生成策略”设计器属性的值
 // 更改为“旧的 ObjectContext”。当在设计器中打开该模型时，此属性会出现在
 // “属性”窗口中。

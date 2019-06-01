@@ -12,7 +12,7 @@ namespace LockWebMVC.Controllers
 {
     public class User_keyController : Controller
     {
-        private LockEntities db = new LockEntities();
+        private lockEntities db = new lockEntities();
 
         // GET: User_key
         public ActionResult Index()

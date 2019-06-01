@@ -7,7 +7,7 @@
       <Diagram DiagramId="ed171f2dd0d146bca5c1346ad31b5978" Name="Diagram1">
         <EntityTypeShape EntityType="lockModel.Department" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="lockModel.DomainUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="lockModel.LockConfig" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="lockModel.LockConfig" Width="1.5" PointX="6.375" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="lockModel.Ukey" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="lockModel.User_key" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="lockModel.FK_DomainUser_Department" ManuallyRouted="false" />
