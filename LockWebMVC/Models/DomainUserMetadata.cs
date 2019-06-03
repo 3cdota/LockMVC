@@ -20,10 +20,13 @@ namespace LockWebMVC.Models
 
         [Display(Name = "没有Ukey")]
         public bool NoKey { get; set; }
-        [Display(Name = "显示C盘")]
+        [Display(Name = "C盘可访问")]
         public bool ShowC { get; set; }
         [Display(Name = "可以共享")]
         public bool CanShare { get; set; }
+
+        [Display(Name = "桌面可存放")]
+        public bool UseDeskTop { get; set; }
 
         [JsonIgnore]
         public virtual Department Department { get; set; }

@@ -48,7 +48,7 @@ namespace LockWebMVC.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserName,DepartmentID,NoKey,ShowC,CanShare")] DomainUser domainUser)
+        public ActionResult Create([Bind(Include = "ID,UserName,DepartmentID,NoKey,ShowC,CanShare,UseDeskTop")] DomainUser domainUser)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace LockWebMVC.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserName,DepartmentID,NoKey,ShowC,CanShare")] DomainUser domainUser)
+        public ActionResult Edit([Bind(Include = "ID,UserName,DepartmentID,NoKey,ShowC,CanShare,UseDeskTop")] DomainUser domainUser)
         {
             if (ModelState.IsValid)
             {

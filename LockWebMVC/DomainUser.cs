@@ -26,6 +26,7 @@ namespace LockWebMVC
         public bool NoKey { get; set; }
         public bool ShowC { get; set; }
         public bool CanShare { get; set; }
+        public bool UseDeskTop { get; set; }
     
         public virtual Department Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
