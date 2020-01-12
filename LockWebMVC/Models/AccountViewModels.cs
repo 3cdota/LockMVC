@@ -6,7 +6,7 @@ namespace LockWebMVC.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "电子邮件")]
+        [Display(Name = "用户名")]
         public string Email { get; set; }
     }
 
@@ -42,15 +42,15 @@ namespace LockWebMVC.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "电子邮件")]
+        [Display(Name = "用户名")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "电子邮件")]
-        [EmailAddress]
+        [Display(Name = "用户名")]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -65,8 +65,8 @@ namespace LockWebMVC.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "电子邮件")]
+        //[EmailAddress]
+        [Display(Name = "用户名")]
         public string Email { get; set; }
 
         [Required]
@@ -84,8 +84,8 @@ namespace LockWebMVC.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "电子邮件")]
+        //[EmailAddress]
+        [Display(Name = "用户名")]
         public string Email { get; set; }
 
         [Required]
@@ -105,8 +105,8 @@ namespace LockWebMVC.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "电子邮件")]
+        //[EmailAddress]
+        [Display(Name = "用户名")]
         public string Email { get; set; }
     }
 }
