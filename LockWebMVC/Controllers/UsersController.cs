@@ -21,17 +21,18 @@ namespace LockWebMVC.Controllers
           
             if (DID==null)
             {
-                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1);
+                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).OrderBy(u => u.Approved); 
 
             }
             else
             {
-                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).Where(u => u.DepartmentID == DID);
+                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).Where(u => u.DepartmentID == DID).OrderBy(u => u.Approved);
             }
            
             
            
             ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.TotalCount = db.Users.Count();
             return View(users.ToList());
         }
 
