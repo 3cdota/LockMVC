@@ -15,9 +15,23 @@ namespace LockWebMVC.Controllers
         private lockEntities db = new lockEntities();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index( int? DID)
         {
-            var users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1);
+            IQueryable<User> users;
+          
+            if (DID==null)
+            {
+                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1);
+
+            }
+            else
+            {
+                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).Where(u => u.DepartmentID == DID);
+            }
+           
+            
+           
+            ViewBag.DepartmentList = db.Departments.ToList();
             return View(users.ToList());
         }
 

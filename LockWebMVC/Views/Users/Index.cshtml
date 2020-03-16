@@ -2,91 +2,97 @@
 
 @{
     ViewBag.Title = "Index";
+    List<Department> departments = ViewBag.DepartmentList;
 }
 
-<h2>Index</h2>
+    <div class="col-md-2" style="border:2px solid #18bc9c" >
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department1.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpecificDepartment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DomainUserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IpAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MacAddress)
-        </th>
+        <ul class="nav nav-pills nav-stacked">
+            @foreach (var item in departments)
+            {
+                <li role="presentation"><a href="/Users/index?DID=@item.ID">@item.DepartmentName<span class="badge">@item.Users.Count</span></a> </li>
+                
+            }
 
-        <th>
-            @Html.DisplayNameFor(model => model.Approved)
-        </th>
+        </ul>
 
-        <th>
-            @Html.DisplayNameFor(model => model.AuthType1.AuthName)
-        </th>
-        <th></th>
-    </tr>
+    </div>
+    <div class="col-md-10">
+        <h2>Index</h2>
+    
+    <p>
+        @Html.ActionLink("Create New", "Create")
+   
+        <table class="table">
+            <tr class="warning">
+                <th>
+                    序号
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department1.DepartmentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SpecificDepartment)
+                </th>
+              
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Department1.DepartmentName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.SpecificDepartment)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Number)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DomainUserName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.IpAddress)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.MacAddress)
-    </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Approved)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.AuthType1.AuthName)
+                </th>
+                <th></th>
+            </tr>
+
+            @{ int i = 1; }
+            @foreach (var item in Model)
+            {
+                var color = "";
+                switch (i % 2)
+                {
+                    case 1:
+                        color = "info";
+                        break;
+                    case 0:
+                        color = "success";
+                        break;
+                }
+                <tr class=@color>
+                    <td>
+                        @(i++)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department1.DepartmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SpecificDepartment)
+                    </td>
+                   
 
 
-    <td>
-        @Html.DisplayFor(modelItem => item.Approved)
-    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Approved)
+                    </td>
 
-    <td>
-        @Html.DisplayFor(modelItem => item.AuthType1.AuthName)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-    </td>
-</tr>
-}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AuthType1.AuthName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+
+    </div>
