@@ -1,0 +1,92 @@
+﻿@model IEnumerable<LockWebMVC.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department1.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecificDepartment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DomainUserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IpAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MacAddress)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Approved)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.AuthType1.AuthName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Department1.DepartmentName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SpecificDepartment)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Address)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Number)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DomainUserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.IpAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MacAddress)
+    </td>
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Approved)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.AuthType1.AuthName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+    </td>
+</tr>
+}
+
+</table>

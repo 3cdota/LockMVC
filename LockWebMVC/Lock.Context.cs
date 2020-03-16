@@ -30,5 +30,7 @@ namespace LockWebMVC
         public virtual DbSet<LockConfig> LockConfigs { get; set; }
         public virtual DbSet<Ukey> Ukeys { get; set; }
         public virtual DbSet<User_key> User_key { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<AuthType> AuthTypes { get; set; }
     }
 }

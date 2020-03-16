@@ -10,107 +10,116 @@ using LockWebMVC;
 
 namespace LockWebMVC.Controllers
 {
-    public class DepartmentsController : Controller
+    public class UsersController : Controller
     {
         private lockEntities db = new lockEntities();
 
-        // GET: Departments
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Departments.ToList());
+            var users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1);
+            return View(users.ToList());
         }
 
-        // GET: Departments/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
-            if (department == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(user);
         }
 
-        // GET: Departments/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
+            ViewBag.DepartmentID = new SelectList(db.Departments, "ID", "DepartmentName");
+            ViewBag.AuthTypeID = new SelectList(db.AuthTypes, "ID", "AuthName");
             return View();
         }
 
-        // POST: Departments/Create
+        // POST: Users/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DepartmentName")] Department department)
+        public ActionResult Create([Bind(Include = "ID,Name,DepartmentID,SpecificDepartment,Address,Number,DomainUserName,IpAddress,MacAddress,CN,Password,ShowC,CanShare,UseDeskTop,Approved,AuthTypeID")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Departments.Add(department);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(department);
+            ViewBag.DepartmentID = new SelectList(db.Departments, "ID", "DepartmentName", user.DepartmentID);
+            ViewBag.AuthTypeID = new SelectList(db.AuthTypes, "ID", "AuthName", user.AuthTypeID);
+            return View(user);
         }
 
-        // GET: Departments/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
-            if (department == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            ViewBag.DepartmentID = new SelectList(db.Departments, "ID", "DepartmentName", user.DepartmentID);
+            ViewBag.AuthTypeID = new SelectList(db.AuthTypes, "ID", "AuthName", user.AuthTypeID);
+            return View(user);
         }
 
-        // POST: Departments/Edit/5
+        // POST: Users/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DepartmentName")] Department department)
+        public ActionResult Edit([Bind(Include = "ID,Name,DepartmentID,SpecificDepartment,Address,Number,DomainUserName,IpAddress,MacAddress,CN,Password,ShowC,CanShare,UseDeskTop,Approved,AuthTypeID")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(department).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(department);
+            ViewBag.DepartmentID = new SelectList(db.Departments, "ID", "DepartmentName", user.DepartmentID);
+            ViewBag.AuthTypeID = new SelectList(db.AuthTypes, "ID", "AuthName", user.AuthTypeID);
+            return View(user);
         }
 
-        // GET: Departments/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
-            if (department == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(user);
         }
 
-        // POST: Departments/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Department department = db.Departments.Find(id);
-            db.Departments.Remove(department);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

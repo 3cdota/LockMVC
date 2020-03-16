@@ -5,12 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="lockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuthType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuthName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DomainUser">
           <Key>
@@ -38,6 +45,27 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CN" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="SpecificDepartment" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DomainUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="MacAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="CN" Type="nvarchar" MaxLength="500" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="AuthTypeID" Type="int" Nullable="false" />
+          <Property Name="ShowC" Type="bit" Nullable="false" />
+          <Property Name="CanShare" Type="bit" Nullable="false" />
+          <Property Name="UseDeskTop" Type="bit" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="User_key">
           <Key>
             <PropertyRef Name="ID" />
@@ -56,6 +84,30 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DomainUser">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_AuthType">
+          <End Role="AuthType" Type="Self.AuthType" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AuthTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
               <PropertyRef Name="DepartmentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -89,14 +141,24 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="lockModelStoreContainer">
+          <EntitySet Name="AuthType" EntityType="Self.AuthType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DomainUser" EntityType="Self.DomainUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LockConfig" EntityType="Self.LockConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ukey" EntityType="Self.Ukey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_key" EntityType="Self.User_key" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DomainUser_Department" Association="Self.FK_DomainUser_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="DomainUser" EntitySet="DomainUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_AuthType" Association="Self.FK_User_AuthType">
+            <End Role="AuthType" EntitySet="AuthType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Department" Association="Self.FK_User_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_key_DomainUser" Association="Self.FK_User_key_DomainUser">
             <End Role="DomainUser" EntitySet="DomainUser" />
@@ -116,8 +178,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Department1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="DomainUsers" Relationship="Self.FK_DomainUser_Department" FromRole="Department" ToRole="DomainUser" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="lockModel.FK_User_Department" FromRole="Department" ToRole="User" />
         </EntityType>
         <EntityType Name="DomainUser">
           <Key>
@@ -218,7 +281,72 @@
             <End Role="Ukey" EntitySet="Ukeys" />
             <End Role="User_key" EntitySet="User_key" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="lockModel.User" />
+          <EntitySet Name="AuthTypes" EntityType="lockModel.AuthType" />
+          <AssociationSet Name="FK_User_AuthType" Association="lockModel.FK_User_AuthType">
+            <End Role="AuthType" EntitySet="AuthTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Department" Association="lockModel.FK_User_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="SpecificDepartment" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DomainUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MacAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShowC" Type="Boolean" Nullable="false" />
+          <Property Name="CanShare" Type="Boolean" Nullable="false" />
+          <Property Name="UseDeskTop" Type="Boolean" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="AuthTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department1" Relationship="lockModel.FK_User_Department" FromRole="User" ToRole="Department" />
+          <NavigationProperty Name="AuthType1" Relationship="lockModel.FK_User_AuthType" FromRole="User" ToRole="AuthType" />
+        </EntityType>
+        <EntityType Name="AuthType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="lockModel.FK_User_AuthType" FromRole="AuthType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_AuthType">
+          <End Type="lockModel.AuthType" Role="AuthType" Multiplicity="1" />
+          <End Type="lockModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AuthTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Department">
+          <End Type="lockModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="lockModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -228,8 +356,8 @@
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="lockModel.Department">
               <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Department1" ColumnName="Department" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -268,6 +396,36 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="KeyID" ColumnName="KeyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="lockModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="AuthTypeID" ColumnName="AuthTypeID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="UseDeskTop" ColumnName="UseDeskTop" />
+                <ScalarProperty Name="CanShare" ColumnName="CanShare" />
+                <ScalarProperty Name="ShowC" ColumnName="ShowC" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CN" ColumnName="CN" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="DomainUserName" ColumnName="DomainUserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="SpecificDepartment" ColumnName="SpecificDepartment" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthTypes">
+            <EntityTypeMapping TypeName="lockModel.AuthType">
+              <MappingFragment StoreEntitySet="AuthType">
+                <ScalarProperty Name="AuthName" ColumnName="AuthName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

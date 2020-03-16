@@ -12,20 +12,17 @@ namespace LockWebMVC
     using System;
     using System.Collections.Generic;
     
-    public partial class Department
+    public partial class AuthType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public AuthType()
         {
-            this.DomainUsers = new HashSet<DomainUser>();
             this.Users = new HashSet<User>();
         }
     
         public int ID { get; set; }
-        public string DepartmentName { get; set; }
+        public string AuthName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DomainUser> DomainUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

@@ -12,4 +12,20 @@ namespace LockWebMVC
     public partial class DomainUser
     {
     }
+
+
+    [MetadataType(typeof(UserMetadata))]
+    public partial class User
+    {
+    }
+
+
+    [MetadataType(typeof(AuthTypeMetadata))]
+    public partial class AuthType
+    {
+    }
+    [MetadataType(typeof(DepartmentMetadata))]
+    public partial class Department
+    {
+    }
 }

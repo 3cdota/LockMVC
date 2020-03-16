@@ -81,6 +81,24 @@ namespace LockWebMVC.Controllers
 
         }
 
+        [HttpGet]
+        [Route("api/authen/userInfoByMac")]
+        public User UserInfoByMac(string macAdress)
+        {
+            var userList = db.Users.Where(x => x.MacAddress == macAdress).ToList();
+            if (userList.Count > 0)
+            {
+                return userList[0];
+
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+
 
 
         // POST api/<controller>
