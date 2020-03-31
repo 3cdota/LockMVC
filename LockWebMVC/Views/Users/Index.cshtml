@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<LockWebMVC.User>
+@using PagedList.Mvc;
+@using PagedList;
 
 @{
     ViewBag.Title = "Index";
+    var pagedlist = (IPagedList)Model;
     List<Department> departments = ViewBag.DepartmentList;
 }
 <div class="row" style="margin-top:8px">
 
-    <div class="col-md-2" style="border:2px solid #18bc9c" >
+    <div class="col-md-2" style="border:2px solid #18bc9c">
 
         <ul class="nav nav-pills nav-stacked">
-            <li role="presentation"><a href="/Users/index">全部用户<span class="badge">@ViewBag.TotalCount</span></a><hr/> </li>
-           
+            <li role="presentation"><a href="/Users/index">全部用户<span class="badge">@ViewBag.TotalCount</span></a><hr /> </li>
+
             @foreach (var item in departments)
             {
                 <li role="presentation"><a href="/Users/index?DID=@item.ID">@item.DepartmentName<span class="badge">@item.Users.Count</span></a> </li>
@@ -22,9 +25,29 @@
     </div>
     <div class="col-md-10">
         <h2></h2>
-    
+
+
+        @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+        {
+            <p>
+                <div class="form-inline">
+
+                    <div class="form-group">
+                        @Html.Hidden("DID", ViewBag.DID as String)
+
+                        @Html.TextBox("SearchString", ViewBag.SearchString as string, new { @class = "form-control", @style = "width:850px" })
+                    </div>
+
+
+                    <input type="submit" value="搜索" class="btn btn-danger" />
+
+                </div>
+            </p>
+
+        }
+
         <p>
-            <!-- @Html.ActionLink("Create New", "Create")-->
+             @*@Html.ActionLink("Create New", "Create")*@
 
             <table class="table">
                 <tr class="warning">
@@ -56,6 +79,7 @@
                 @foreach (var item in Model)
                 {
                     var color = "";
+                    var tdcolor = "";
                     switch (i % 2)
                     {
                         case 1:
@@ -65,12 +89,12 @@
                             color = "success";
                             break;
                     }
-                    if(!item.Approved)
+                    if (!item.Approved)
                     {
-                        color = "danger";
+                        tdcolor = "danger";
                     }
                     <tr class=@color>
-                        <td>
+                        <td >
                             @(i++)
                         </td>
                         <td>
@@ -85,7 +109,7 @@
 
 
 
-                        <td>
+                        <td >
                             @Html.DisplayFor(modelItem => item.Approved)
                         </td>
 
@@ -93,14 +117,25 @@
                             @Html.DisplayFor(modelItem => item.AuthType1.AuthName)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                            @Html.ActionLink("批准", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("详细", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.ID })
                         </td>
                     </tr>
                 }
 
             </table>
 
-</div>
+            共 @pagedlist.TotalItemCount 项 ，Page @(pagedlist.PageCount < pagedlist.PageNumber ? 0 : pagedlist.PageNumber) of @pagedlist.PageCount
+            @Html.PagedListPager(pagedlist, page => Url.Action("Index",
+             new
+             {
+                 page = page,
+                 PageSize = ViewBag.PageSize,
+                 SearchString = ViewBag.SearchString,
+                 DID=ViewBag.DID,
+               
+            }))
+
+    </div>
 </div>

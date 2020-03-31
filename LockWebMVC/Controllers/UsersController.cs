@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LockWebMVC;
+using PagedList;
 
 namespace LockWebMVC.Controllers
 {
@@ -15,25 +16,40 @@ namespace LockWebMVC.Controllers
         private lockEntities db = new lockEntities();
 
         // GET: Users
-        public ActionResult Index( int? DID)
+        public ActionResult Index(int? PageSize, int? page,int? DID,string SearchString)
         {
-            IQueryable<User> users;
-          
-            if (DID==null)
-            {
-                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).OrderBy(u => u.Approved); 
-
-            }
-            else
-            {
-                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).Where(u => u.DepartmentID == DID).OrderBy(u => u.Approved);
-            }
-           
-            
-           
+            //保存状态
+            ViewBag.DID = DID;
+            ViewBag.SearchString = SearchString;
+            ViewBag.PageSize = PageSize;
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.TotalCount = db.Users.Count();
-            return View(users.ToList());
+            //
+            var users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1);
+            if(DID!=null)
+            {
+                users = db.Users.Include(u => u.Department1).Include(u => u.AuthType1).Where(u => u.DepartmentID == DID);
+            }
+
+            if(SearchString!=null)
+            {
+                users = users.Where(u => u.Name.Contains(SearchString)
+                  || u.SpecificDepartment.Contains(SearchString)                
+                  || u.IpAddress.Contains(SearchString)
+                  || u.Address.Contains(SearchString)
+                  ||u.CN.Contains(SearchString)
+                  ||u.DomainUserName.Contains(SearchString)
+
+                );
+            }
+
+            users = users.OrderBy(x => x.Approved).ThenByDescending(x => x.ID);
+
+            //分页
+            int pageSize = PageSize ?? 10;
+            int pageNumber = (page ?? 1);
+            return View(users.ToPagedList(pageNumber, pageSize));
+           
         }
 
         // GET: Users/Details/5
