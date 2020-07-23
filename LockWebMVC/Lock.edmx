@@ -64,6 +64,7 @@
           <Property Name="ShowC" Type="bit" Nullable="false" />
           <Property Name="CanShare" Type="bit" Nullable="false" />
           <Property Name="UseDeskTop" Type="bit" Nullable="false" />
+          <Property Name="Usb" Type="bit" Nullable="false" />
           <Property Name="Approved" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User_key">
@@ -101,7 +102,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
@@ -314,6 +317,7 @@
           <Property Name="AuthTypeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Department1" Relationship="lockModel.FK_User_Department" FromRole="User" ToRole="Department" />
           <NavigationProperty Name="AuthType1" Relationship="lockModel.FK_User_AuthType" FromRole="User" ToRole="AuthType" />
+          <Property Name="Usb" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="AuthType">
           <Key>
@@ -402,6 +406,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="lockModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Usb" ColumnName="Usb" />
                 <ScalarProperty Name="AuthTypeID" ColumnName="AuthTypeID" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />

@@ -116,7 +116,7 @@ namespace LockWebMVC.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,DepartmentID,SpecificDepartment,Address,Number,DomainUserName,IpAddress,MacAddress,CN,Password,ShowC,CanShare,UseDeskTop,Approved,AuthTypeID")] User user)
+        public ActionResult Edit([Bind(Include = "ID,Name,DepartmentID,SpecificDepartment,Address,Number,DomainUserName,IpAddress,MacAddress,CN,Password,ShowC,CanShare,UseDeskTop,Usb,Approved,AuthTypeID")] User user)
         {
             if (ModelState.IsValid)
             {

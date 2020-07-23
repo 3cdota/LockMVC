@@ -30,6 +30,7 @@ namespace LockWebMVC
         public bool UseDeskTop { get; set; }
         public bool Approved { get; set; }
         public int AuthTypeID { get; set; }
+        public bool Usb { get; set; }
     
         public virtual Department Department1 { get; set; }
         public virtual AuthType AuthType1 { get; set; }

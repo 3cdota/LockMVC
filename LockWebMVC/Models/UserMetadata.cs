@@ -32,8 +32,11 @@ namespace LockWebMVC.Models
         public bool ShowC { get; set; }
         [Display(Name = "可以共享")]
         public bool CanShare { get; set; }
-        [Display(Name = "桌面可用")]
+        [Display(Name = "桌面可用")]        
         public bool UseDeskTop { get; set; }
+
+        [Display(Name = "U盘可用")]
+        public bool Usb { get; set; }
         [Display(Name = "是否批准")]
         public bool Approved { get; set; }
         [Display(Name = "单位")]
