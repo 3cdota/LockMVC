@@ -268,11 +268,11 @@
     <Content Include="Lock.edmx.diagram">
       <DependentUpon>Lock.edmx</DependentUpon>
     </Content>
-    <Content Include="lock.bak">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="libman.json" />
     <Content Include="lockIdentity.bak">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lock.bak">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
