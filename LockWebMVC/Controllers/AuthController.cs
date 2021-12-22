@@ -10,6 +10,9 @@ using System.Web.Http;
 
 namespace LockWebMVC.Controllers
 {
+    /// <summary>
+    /// 认证相关操作
+    /// </summary>
     public class AuthenController : ApiController
     {
         private lockEntities db = new lockEntities();
@@ -20,6 +23,12 @@ namespace LockWebMVC.Controllers
         //}
 
         //GET api/<controller>/5
+        /// <summary>
+        /// 判断用户是否存在
+        /// </summary>
+        /// <param name="name">用户名</param>
+        /// <param name="cn">cn值</param>
+        /// <returns>真假值</returns>
         public bool Get(String name, String cn)
         {
             
