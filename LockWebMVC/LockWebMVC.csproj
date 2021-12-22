@@ -188,7 +188,6 @@
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DomainUsersController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UkeysController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
